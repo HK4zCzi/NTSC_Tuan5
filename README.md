@@ -1,7 +1,7 @@
 # NTSC_Tuan5
-nano lablfi.sh
-sudo chmod +x lablfi.sh
-sudo ./lablfi.sh
+#nano lablfi.sh
+#sudo chmod +x lablfi.sh
+#sudo ./lablfi.sh
 sudo tee /var/www/tomato/antibot_image/antibots/info.php >/dev/null <<'PHP'
 <?php header("X-Frame-Options: DENY"); ?>
 <!doctype html><html lang="en"><head>
